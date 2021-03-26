@@ -21,22 +21,41 @@ public class SortedLinkedList<T extends Comparable<T>> implements SortedList<T>{
 
     @Override
     public void add(T item) {
+        Node node = new Node(item);
+        Node cur = head;
+        Node prev = null;
+        while (cur != null && item.compareTo((T) cur.data) > 0) {
+            prev = cur;
+            cur = cur.next;
+        }
+        if (prev == null) {
+            head = node;
+        }
+        else {
+            prev.next = node;
+        }
+        node.next = cur;
+        size++;
+    }
+
+    /*    @Override
+    public void add(T item) {
         if (head == null) {
             head = new Node(item);
         }
+        //if prev == null, make head = new node
+        //set current head.next =
         else {
                 Node prev = head;
-                Node cur = head.next;
-                while (item.compareTo((T) prev.data) > 0 && prev.next != null) {
-                    prev = cur;
-                    cur = cur.next;
+                while (item.compareTo((T) prev.data) >= 0 && prev.next != null) {
+                    prev = prev.next;
                 }
                 Node node = new Node(item);
-                node.next = cur;
                 prev.next = node;
+                node.next = null;
             }
         size++;
-    }
+    }*/
 
     @Override
     public T get(int pos) {
@@ -77,9 +96,11 @@ public class SortedLinkedList<T extends Comparable<T>> implements SortedList<T>{
             String s = "";
             Node cur = head;
             for (int i = 0; i < size; i++) {
-                s += cur.data;
-                s += ", ";
-                cur = cur.next;
+                if (cur != null) {
+                    s += cur.data;
+                    s += ", ";
+                    cur = cur.next;
+                }
             }
             return s;
         }
