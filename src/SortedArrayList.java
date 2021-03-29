@@ -2,14 +2,20 @@ import java.util.Arrays;
 
 public class SortedArrayList<T extends Comparable<T>> implements SortedList<T>{
 
+    //data members
     protected int size = 0;
     protected T[] arr;
 
+    //class constructor
     public SortedArrayList() {
         arr = (T[]) new Comparable[10];
         size=0;
     }
 
+    /**
+     * adds item to array and grows array if array is full
+     * @param item the value added
+     */
     @Override
     public void add(T item) {
         if (size == arr.length) {
@@ -25,18 +31,28 @@ public class SortedArrayList<T extends Comparable<T>> implements SortedList<T>{
 
     }
 
+    /**
+     * Returns the index of the input
+     * @param pos the index checked
+     * @return the value at the index input
+     */
     @Override
-    public T get(int pos) {
+    public T get(int pos) throws Exception {
             if (pos < 0 || pos >= size) {
-                throw new UnsupportedOperationException("index out of bounds");
+                throw new Exception("index out of bounds");
             }
             return arr[pos];
     }
 
+    /**
+     * Removes and returns the item removed
+     * @param pos the position to remove
+     * @return the item at the position
+     */
     @Override
-    public T remove(int pos) {
+    public T remove(int pos) throws Exception {
         if (pos < 0 || pos >= size) {
-            throw new UnsupportedOperationException("index out of bounds");
+            throw new Exception("index out of bounds");
         }
         T ele = arr[pos];
         for (int i = pos; i < size; i++) {
@@ -45,11 +61,15 @@ public class SortedArrayList<T extends Comparable<T>> implements SortedList<T>{
         size --;
         return ele;
     }
-
+    /**
+     * checks array size
+     * @return the size of the array
+     */
     @Override
     public int size() {
         return size;
     }
+
 
     @Override
     public String toString() {
@@ -58,8 +78,10 @@ public class SortedArrayList<T extends Comparable<T>> implements SortedList<T>{
                 ", arr=" + Arrays.toString(arr) +
                 '}';
     }
-
-    private void grow_array () //doubles size of array
+    /**
+     * doubles the size of the array
+     */
+    private void grow_array ()
     {
         int len = arr.length;
         if (len == 0) {

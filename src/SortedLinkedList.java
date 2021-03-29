@@ -2,14 +2,17 @@
 
 public class SortedLinkedList<T extends Comparable<T>> implements SortedList<T>{
 
+    //data members
     protected int size;
     protected Node head;
 
+    //class constructor
     public SortedLinkedList() {
         head = null;
         size = 0;
     }
 
+    //Node class for use in linked list
     private class Node<T> {
         T data;
         Node<T> next;
@@ -19,6 +22,10 @@ public class SortedLinkedList<T extends Comparable<T>> implements SortedList<T>{
         }
     }
 
+    /**
+     * adds item to array
+     * @param item the value added
+     */
     @Override
     public void add(T item) {
         Node node = new Node(item);
@@ -38,27 +45,16 @@ public class SortedLinkedList<T extends Comparable<T>> implements SortedList<T>{
         size++;
     }
 
-    /*    @Override
-    public void add(T item) {
-        if (head == null) {
-            head = new Node(item);
-        }
-        //if prev == null, make head = new node
-        //set current head.next =
-        else {
-                Node prev = head;
-                while (item.compareTo((T) prev.data) >= 0 && prev.next != null) {
-                    prev = prev.next;
-                }
-                Node node = new Node(item);
-                prev.next = node;
-                node.next = null;
-            }
-        size++;
-    }*/
-
+    /**
+     * Returns the index of the input
+     * @param pos the index checked
+     * @return the value at the pos input
+     */
     @Override
-    public T get(int pos) {
+    public T get(int pos) throws Exception {
+        if (pos < 0 || pos >= size) {
+            throw new Exception("index out of bounds");
+        }
         Node curr = head;
         for (int i = 0; i < pos; i++) {
             curr = curr.next;
@@ -66,8 +62,16 @@ public class SortedLinkedList<T extends Comparable<T>> implements SortedList<T>{
         return (T) curr.data;
     }
 
+    /**
+     * Removes and returns the item removed
+     * @param pos the position to remove
+     * @return the item at the position
+     */
     @Override
-    public T remove(int pos) {
+    public T remove(int pos) throws Exception {
+        if (pos < 0 || pos >= size) {
+            throw new Exception("index out of bounds");
+        }
         if (pos == 0) {
             Node node = head;
             head = head.next;
@@ -85,11 +89,14 @@ public class SortedLinkedList<T extends Comparable<T>> implements SortedList<T>{
         }
     }
 
+    /**
+     * checks array size
+     * @return the size of the array
+     */
     @Override
     public int size() {
         return size;
     }
-
 
         @Override
     public String toString() {
